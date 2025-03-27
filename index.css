@@ -1,0 +1,170 @@
+:root {
+  --background-color: #0d1b2a;
+  --color1: #1b263b;
+  --color2: #415a77;
+  --color3: #778da9;
+  --color4: #e0e1dd;
+}
+
+body {
+  background-color: var(--background-color);
+  color: white;
+}
+
+.input-group input {
+  background-color: var(--color2);
+  border: none;
+  padding: 8px;
+  font-size: 18px;
+}
+
+.main-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 64px 32px;
+}
+
+.calculator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1.title {
+  color: white;
+  font-size: 36px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 48px;
+}
+
+.type-select-container {
+  display: flex;
+  gap: 32px;
+  font-size: 24px;
+  border-radius: 50px;
+  margin-bottom: 64px;
+}
+
+.type-option {
+  display: flex;
+  height: 48px;
+  padding: 0 32px;
+  align-items: center;
+  border-radius: 24px;
+  cursor: pointer;
+}
+
+.type-option.is-selected {
+  background-image: linear-gradient(90deg, var(--color2), var(--color3));
+}
+
+.calculator {
+  width: 100%;
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+}
+
+.result-section {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  font-size: 20px;
+}
+
+.result-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 12px;
+  border: 1px solid white;
+  padding: 16px;
+}
+
+.result-item {
+  display: flex;
+  gap: 4px;
+}
+
+.result-label {
+  flex-grow: 1;
+}
+
+.totalInvestment {
+  color: rgb(255, 114, 114);
+}
+
+.monthlyMargin,
+.annualProfit {
+  color: rgb(153, 255, 153);
+}
+
+.roiAnnual {
+  color: rgb(146, 193, 255);
+}
+
+#utilization {
+  flex-grow: 8;
+}
+
+.input-field {
+  border-radius: 12px;
+  padding: 16px;
+  background-image: linear-gradient(var(--color1), var(--background-color));
+  border: 1px solid var(--color1);
+  /* width: 400px; */
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.time-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.time-box {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.time-box select {
+  appearance: none;
+  font-size: 18px;
+  background-color: #415a77;
+  border: none;
+  padding: 8px;
+}
+
+.input-item {
+  display: flex;
+  width: 280px;
+  gap: 8px;
+  align-items: center;
+}
+
+.input-item > h2 {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.input-item > input {
+  width: 80px;
+  text-align: right;
+}
+
+.input-item > .unit {
+  width: 32px;
+  flex-shrink: 0;
+}

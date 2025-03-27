@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>쏠레 파크골프 수익 예상</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="calculator-container">
+        <h1 class="title">쏠레 스크린 파크골프 수익 예상</h1>
+        <div class="type-select-container">
+          <div class="type-option">위탁 투자형</div>
+          <div class="type-option is-selected">매장 운영형</div>
+        </div>
+        <div class="calculator">
+          <div class="result-section">
+            <div class="result-group result-investment"></div>
+            <div class="result-group result-revenue"></div>
+            <div class="result-group result-profit"></div>
+          </div>
+          <div class="input-field">
+            <div class="input-group">
+              <h2>영업시간</h2>
+              <div class="time-group">
+                <div class="time-box open-time">
+                  <select name="open-hour" id="open-hour">
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08" selected>08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                  <span>:</span>
+                  <select name="open-minute" id="open-minute">
+                    <option value="00">00</option>
+                    <option value="30">30</option>
+                  </select>
+                </div>
+                <span>~</span>
+                <div class="time-box close-time">
+                  <select name="close-hour" id="close-hour">
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21" selected>21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                  </select>
+                  <span>:</span>
+                  <select name="open-minute" id="close-minute">
+                    <option value="00">00</option>
+                    <option value="30">30</option>
+                  </select>
+                </div>
+                <div class="unit">
+                  <span class="total-hour-display">10</span>시간
+                </div>
+              </div>
+            </div>
+            <div class="input-item">
+              <p class="input-label">스크린 가동율</p>
+              <input
+                type="range"
+                name="utilization"
+                id="utilization"
+                value="55"
+              />
+              <p class="input-unit">
+                <span class="utiliztion-display">55</span>%
+              </p>
+            </div>
+            <div class="input-group">
+              <div class="input-item">
+                <h2>게임비</h2>
+                <input type="text" class="game-price-input" value="7000" />
+                <span class="unit">원</span>
+              </div>
+            </div>
+            <div class="input-group">
+              <div class="input-item">
+                <h2>평수</h2>
+                <input type="text" class="area-input" value="60" />
+                <span class="unit">평</span>
+              </div>
+              <div class="input-item">
+                <h2>타석 갯수</h2>
+                <input type="text" class="lane-count-input" value="8" />
+                <span class="unit">개</span>
+              </div>
+            </div>
+            <div class="input-group">
+              <div class="input-item">
+                <h2>월세</h2>
+                <input type="text" class="rent-input" value="200" />
+                <span class="unit">만원</span>
+              </div>
+              <div class="input-item">
+                <h2>공과금</h2>
+                <input type="text" class="utility-input" value="10" />
+                <span class="unit">만원</span>
+              </div>
+            </div>
+            <div class="input-group">
+              <div class="input-item">
+                <h2>직원 수</h2>
+                <input type="text" class="staff-count-input" value="1" />
+                <span class="unit">명</span>
+              </div>
+              <div class="input-item">
+                <h2>시급</h2>
+                <input type="text" class="hourly-wage-input" value="10030" />
+                <span class="unit">원</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="calculator.js"></script>
+  </body>
+</html>
