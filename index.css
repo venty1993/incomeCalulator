@@ -168,3 +168,29 @@ h1.title {
   width: 32px;
   flex-shrink: 0;
 }
+
+@media screen and (max-width: 800px) {
+  h1 {
+    font-size: 24px;
+  }
+  .calculator {
+    flex-direction: column;
+  }
+
+  .type-option {
+    font-size: 20px;
+  }
+
+  .result-section {
+    width: 100%;
+    font-size: 16px;
+    order: 1;
+  }
+
+  .input-field {
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    order: 0;
+  }
+}
