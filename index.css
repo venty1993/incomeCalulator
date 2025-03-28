@@ -6,9 +6,17 @@
   --color4: #e0e1dd;
 }
 
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   background-color: var(--background-color);
   color: white;
+  font-family: 'Pretendard-Regular';
 }
 
 .input-group input {
@@ -145,6 +153,7 @@ h1.title {
   background-color: #415a77;
   border: none;
   padding: 8px;
+  color: white;
 }
 
 .input-item {
@@ -162,6 +171,7 @@ h1.title {
 .input-item > input {
   width: 80px;
   text-align: right;
+  color: white;
 }
 
 .input-item > .unit {
