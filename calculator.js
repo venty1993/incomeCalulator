@@ -10,8 +10,26 @@ const investment = [
   { key: "deviceSetup", label: "기기 설치비용", value: null, unit: "만원" },
   { key: "interior", label: "인테리어", value: null, unit: "만원" },
   {
+    key: "cafe",
+    label: "카페설비",
+    value: null,
+    unit: "만원",
+  },
+  {
+    key: "aircon",
+    label: "냉난방",
+    value: null,
+    unit: "만원",
+  },
+  {
     key: "facilities",
-    label: "집기 및 설비, 냉난방 등",
+    label: "집기 및 설비",
+    value: null,
+    unit: "만원",
+  },
+  {
+    key: "signboard",
+    label: "간판",
     value: null,
     unit: "만원",
   },
@@ -125,12 +143,15 @@ const calculate = () => {
   const calcInvestment = () => {
     const deviceCost = isDirect ? laneCount * 2300 : laneCount * 5000;
     // 카페형 인테리어 평당 150만원
+    const cafeCost = isDirect ? 2000 : 0 ;
+    const signboardCost = isDirect ? 1500 : 0 ;
     const interiorCost = isDirect ? area * 150 : 0;
     // 카페집기 2000 + 냉난방 평수*20만원 + 좌석 집기 간판 4000만원
-    const facilityCost = isDirect ? 2000 + 4000 + 2800 + area * 20 : 0;
-    const total = deviceCost + interiorCost + facilityCost;
+    const airconCost = isDirect ? area * 10 : 0 ;
+    const facilityCost = isDirect ? (80+90) * laneCount : 0;
+    const total = deviceCost + cafeCost + signboardCost + airconCost + interiorCost + facilityCost;
 
-    [deviceCost, interiorCost, facilityCost, total].forEach((value, i) => {
+    [deviceCost, interiorCost,cafeCost, airconCost,facilityCost, signboardCost, total].forEach((value, i) => {
       investment[i].value = value;
     });
   };
@@ -164,7 +185,7 @@ const calculate = () => {
     const monthlyMargin =
       monthlyRevenue - serviceFee - laborCost - rentAndBills;
     const annualProfit = monthlyMargin * 12;
-    const roiAnnual = (annualProfit / (investment[3].value * 10000)) * 100;
+    const roiAnnual = (annualProfit / (investment[investment.length-1].value * 10000)) * 100;
 
     [
       rentAndBills,
