@@ -58,7 +58,7 @@ const profit = [
   { key: "laborCost", label: "인건비", value: null, unit: "원" },
   {
     key: "serviceFee",
-    label: "위탁 운영 수수료(50%)",
+    label: "위탁 운영 수수료(66%)",
     value: null,
     unit: "원",
   },
@@ -141,7 +141,7 @@ const calculate = () => {
   totalHoursDisplay.innerText = totalHours;
   // 레저로 기기 대당 2300만원
   const calcInvestment = () => {
-    const deviceCost = isDirect ? laneCount * 2300 : laneCount * 5000;
+    const deviceCost = isDirect ? laneCount * 890*1.1+40 : laneCount * 5000;
     // 카페형 인테리어 평당 150만원
     const cafeCost = isDirect ? 2000 : 0 ;
     const signboardCost = isDirect ? 1500 : 0 ;
@@ -181,7 +181,7 @@ const calculate = () => {
       ? Math.round(totalHours * 1.2 * hourlyWage * 7 * 4.34 * staffCount)
       : 0;
     const monthlyRevenue = Math.round(revenue[4].value * 7 * 4.34);
-    const serviceFee = isDirect ? 0 : Math.round(monthlyRevenue * 0.5);
+    const serviceFee = isDirect ? 0 : Math.round(monthlyRevenue * 0.66);
     const monthlyMargin =
       monthlyRevenue - serviceFee - laborCost - rentAndBills;
     const annualProfit = monthlyMargin * 12;
