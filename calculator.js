@@ -48,12 +48,19 @@ const revenue = [
   },
   { key: "dailyVisitors", label: "예상 일 방문객", value: null, unit: "명" },
   { key: "dailyCafeRevenue", label: "음료 매출", value: null, unit: "원" },
+  { key: "dailyProductRevenue", label: "용품 매출", value: null, unit: "원" },
   { key: "dailyRevenue", label: "일 매출 합계", value: null, unit: "원" },
 ];
 
 const revenueElement = [];
 
 const profit = [
+  { key: "monthlyMachineRevenue", label: "월 타석 매출", value: null, unit: "원" },
+  { key: "monthlyCafeRevenue", label: "월 음료 매출", value: null, unit: "원" },
+  { key: "monthlyProductRevenue", label: "월 용품 매출", value: null, unit: "원" },
+  { key: "monthlyRevenue", label: "월 매출 합계", value: null, unit: "원" },
+  { key: "cafeCost", label: "음료 원가", value: null, unit: "원" },
+  { key: "productCost", label: "용품 원가", value: null, unit: "원" },
   { key: "rentAndBills", label: "월세 및 공과금", value: null, unit: "원" },
   { key: "laborCost", label: "인건비", value: null, unit: "원" },
   {
@@ -62,7 +69,6 @@ const profit = [
     value: null,
     unit: "원",
   },
-  { key: "monthlyRevenue", label: "월 매출", value: null, unit: "원" },
   { key: "monthlyMargin", label: "월 마진", value: null, unit: "원" },
   { key: "annualProfit", label: "연 수익", value: null, unit: "원" },
   { key: "roiAnnual", label: "투자금대비 수익률(년)", value: null, unit: "%" },
@@ -76,6 +82,7 @@ function getNumberValue(selector) {
 }
 
 function getInputData() {
+  const conversionRateSelect = document.querySelector("#conversion-rate");
   return {
     utilization: getNumberValue("#utilization"),
     gamePrice: getNumberValue(".game-price-input"),
@@ -85,6 +92,9 @@ function getInputData() {
     utility: getNumberValue(".utility-input"),
     staffCount: getNumberValue(".staff-count-input"),
     hourlyWage: getNumberValue(".hourly-wage-input"),
+    laborRate: getNumberValue(".labor-rate-input"),
+    conversionRate: conversionRateSelect ? conversionRateSelect.value : "normal",
+    averagePrice: getNumberValue(".average-price-input"),
   };
 }
 
@@ -135,13 +145,16 @@ const calculate = () => {
     staffCount,
     utility,
     utilization,
+    laborRate,
+    conversionRate,
+    averagePrice,
   } = getInputData();
   utilizationDisplay.innerText = utilization;
   const totalHours = getOperatingTime();
   totalHoursDisplay.innerText = totalHours;
   // 레저로 기기 대당 2300만원
   const calcInvestment = () => {
-    const deviceCost = isDirect ? laneCount * 890*1.1+40 : laneCount * 5000;
+    const deviceCost = isDirect ? laneCount * 890*1.1+40 : laneCount * 5500;
     // 카페형 인테리어 평당 150만원
     const cafeCost = isDirect ? 2000 : 0 ;
     const signboardCost = isDirect ? 1500 : 0 ;
@@ -157,18 +170,28 @@ const calculate = () => {
   };
 
   const calcRevenue = () => {
-    const maxPerMachineRevenue = (totalHours / 0.625) * gamePrice;
+    const maxPerMachineRevenue = (totalHours / 0.5) * gamePrice;
     const perMachineRevenue = maxPerMachineRevenue * (utilization / 100);
     const totalMachineRevenue = perMachineRevenue * laneCount;
     const dailyVisitors = totalMachineRevenue / gamePrice / 2;
     const dailyCafeRevenue = dailyVisitors * 5000 * 0.4;
-    const dailyRevenue = totalMachineRevenue + dailyCafeRevenue;
+    
+    // 구매전환율: 보수적 1%, 일반적 2%, 적극적 4%
+    const conversionRateMap = {
+      conservative: 1,
+      normal: 2,
+      aggressive: 4,
+    };
+    const conversionPercent = conversionRateMap[conversionRate] || 2;
+    const dailyProductRevenue = dailyVisitors * (conversionPercent / 100) * averagePrice * 10000;
+    const dailyRevenue = totalMachineRevenue + dailyCafeRevenue + dailyProductRevenue;
 
     [
       perMachineRevenue,
       totalMachineRevenue,
       dailyVisitors,
       dailyCafeRevenue,
+      dailyProductRevenue,
       dailyRevenue,
     ].forEach((value, i) => {
       revenue[i].value = value;
@@ -178,20 +201,30 @@ const calculate = () => {
   const calcProfit = () => {
     const rentAndBills = isDirect ? (rent + utility) * 10000 : 0;
     const laborCost = isDirect
-      ? Math.round(totalHours * 1.2 * hourlyWage * 7 * 4.34 * staffCount)
+      ? Math.round(totalHours * (laborRate / 100) * hourlyWage * 7 * 4.34 * staffCount)
       : 0;
-    const monthlyRevenue = Math.round(revenue[4].value * 7 * 4.34);
+    const monthlyMachineRevenue = Math.round(revenue[1].value * 7 * 4.34);
+    const monthlyCafeRevenue = Math.round(revenue[3].value * 7 * 4.34);
+    const monthlyProductRevenue = Math.round(revenue[4].value * 7 * 4.34);
+    const monthlyRevenue = Math.round(revenue[5].value * 7 * 4.34);
+    const cafeCost = isDirect ? Math.round(monthlyCafeRevenue * 0.3) : 0;
+    const productCost = isDirect ? Math.round(monthlyProductRevenue * 0.6) : 0;
     const serviceFee = isDirect ? 0 : Math.round(monthlyRevenue * 0.66);
     const monthlyMargin =
-      monthlyRevenue - serviceFee - laborCost - rentAndBills;
+      monthlyRevenue - serviceFee - laborCost - rentAndBills - cafeCost - productCost;
     const annualProfit = monthlyMargin * 12;
     const roiAnnual = (annualProfit / (investment[investment.length-1].value * 10000)) * 100;
 
     [
+      monthlyMachineRevenue,
+      monthlyCafeRevenue,
+      monthlyProductRevenue,
+      monthlyRevenue,
+      cafeCost,
+      productCost,
       rentAndBills,
       laborCost,
       serviceFee,
-      monthlyRevenue,
       monthlyMargin,
       annualProfit,
       roiAnnual,
@@ -215,6 +248,10 @@ const createFields = () => {
         item.unit,
         item.key
       );
+      // 값이 0이면 숨김
+      if (item.value === 0 || item.value === null) {
+        element.style.display = "none";
+      }
       container.appendChild(element);
       return element;
     });
@@ -232,16 +269,31 @@ createFields();
 const refreshFields = () => {
   calculate();
   investmentElement.forEach((item, i) => {
-    item.querySelector(".result-value").innerText =
-      investment[i].value.toLocaleString();
+    const value = investment[i].value;
+    if (value === 0 || value === null) {
+      item.style.display = "none";
+    } else {
+      item.style.display = "";
+      item.querySelector(".result-value").innerText = value.toLocaleString();
+    }
   });
   revenueElement.forEach((item, i) => {
-    item.querySelector(".result-value").innerText =
-      revenue[i].value.toLocaleString();
+    const value = revenue[i].value;
+    if (value === 0 || value === null) {
+      item.style.display = "none";
+    } else {
+      item.style.display = "";
+      item.querySelector(".result-value").innerText = value.toLocaleString();
+    }
   });
   profitElement.forEach((item, i) => {
-    item.querySelector(".result-value").innerText =
-      profit[i].value.toLocaleString();
+    const value = profit[i].value;
+    if (value === 0 || value === null) {
+      item.style.display = "none";
+    } else {
+      item.style.display = "";
+      item.querySelector(".result-value").innerText = value.toLocaleString();
+    }
   });
 };
 

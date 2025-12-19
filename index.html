@@ -71,16 +71,16 @@
                 type="range"
                 name="utilization"
                 id="utilization"
-                value="55"
+                value="35"
               />
               <p class="input-unit">
-                <span class="utiliztion-display">55</span>%
+                <span class="utiliztion-display">35</span>%
               </p>
             </div>
             <div class="input-group">
               <div class="input-item">
                 <h2>게임비</h2>
-                <input type="number" class="game-price-input" value="7000" />
+                <input type="number" class="game-price-input" value="8000" />
                 <span class="unit">원</span>
               </div>
             </div>
@@ -118,6 +118,27 @@
                 <h2>시급</h2>
                 <input type="number" class="hourly-wage-input" value="10030" />
                 <span class="unit">원</span>
+              </div>
+              <div class="input-item">
+                <h2>근로요율</h2>
+                <input type="number" class="labor-rate-input" value="145" />
+                <span class="unit">%</span>
+              </div>
+            </div>
+            <div class="input-group">
+              <div class="input-item">
+                <h2>구매전환율</h2>
+                <select name="conversion-rate" id="conversion-rate" class="conversion-rate-select">
+                  <option value="conservative">보수</option>
+                  <option value="normal" selected>일반</option>
+                  <option value="aggressive">적극</option>
+                </select>
+                <span class="unit">적</span>
+              </div>
+              <div class="input-item">
+                <h2>평단가</h2>
+                <input type="number" class="average-price-input" value="10" />
+                <span class="unit">만원</span>
               </div>
             </div>
           </div>

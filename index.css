@@ -104,6 +104,7 @@ h1.title {
   color: rgb(255, 114, 114);
 }
 
+.monthlyRevenue,
 .monthlyMargin,
 .annualProfit {
   color: rgb(153, 255, 153);
@@ -154,6 +155,17 @@ h1.title {
   border: none;
   padding: 8px;
   color: white;
+}
+
+.conversion-rate-select {
+  appearance: none;
+  font-size: 18px;
+  background-color: var(--color2);
+  border: none;
+  padding: 8px;
+  color: white;
+  width: 80px;
+  text-align: right;
 }
 
 .input-item {
